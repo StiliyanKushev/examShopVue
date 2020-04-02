@@ -1,0 +1,139 @@
+<template>
+    <main>
+        <router-view>
+        </router-view>
+    </main>
+</template>
+
+<script>
+export default {
+    name: 'AppContent',
+}
+</script>
+
+
+<style>
+/* css for main */
+main {
+  margin-top: 3.6rem;
+  background: #100b1b;
+  background: -moz-linear-gradient(-45deg, #100b1b 0%, #131736 100%);
+  background: -webkit-linear-gradient(-45deg, #100b1b 0%, #131736 100%);
+  background: linear-gradient(135deg, #100b1b 0%, #131736 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#100b1b', endColorstr='#131736',GradientType=1 );
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
+/* form css (for login and register) */
+main > .form {
+  width: 100%;
+  height: fit-content;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 5.9rem;
+  padding-bottom: 5.9rem;
+}
+
+main > .sell {
+  padding-top: 0.5rem;
+  padding-bottom: 0.4rem;
+}
+
+main > .register{
+  padding-top: 3rem;
+  padding-bottom: 2.9rem;
+}
+
+main > .form > form {
+  width: fit-content;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: #00000071;
+
+  padding: 4rem 3rem;
+  padding-bottom: 2rem;
+
+  border-radius: 10px;
+
+  border-bottom: solid 3px white;
+  border-right: solid 3px white;
+}
+
+main > .form > form > div {
+  width: 100%;
+}
+
+main > .form > form .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+
+  color: white;
+  font-weight: bold;
+
+  border-bottom: solid 4px white;
+}
+
+main > .form > form .container * {
+  width: 100%;
+
+  margin-bottom: 1rem;
+}
+
+main > .form > form .container input,
+main > .form > form .container textarea {
+  outline: none;
+  border: none;
+
+  padding: 1rem 2rem;
+
+  border-radius: 4px;
+
+  font-size: 0.9rem;
+}
+
+main > .form > form .container button {
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  color: white;
+
+  background-color: rgba(0, 0, 0, 0);
+  border-color: white;
+  border-width: 0.2rem;
+  border-style: solid;
+  border-radius: 0.2rem;
+
+  font-size: 1rem;
+  font-weight: bold;
+
+  transition-duration: 200ms;
+}
+
+main > .form > form .container button:hover {
+  color: #414142;
+  background-color: white;
+}
+
+main > .form > form .otherOption {
+  color: white;
+}
+
+main > .form > form .otherOption a {
+  color: white;
+}
+
+</style>

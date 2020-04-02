@@ -3,7 +3,7 @@
     <div class="App">
         <!-- <ToastContainer autoClose={2300} /> -->
         <AppHeader />
-        <!-- <AppContent /> -->
+        <AppContent />
         <AppFooter />
     </div>
   </div>
@@ -12,12 +12,14 @@
 <script>
 import AppFooter from './components/AppFooter';
 import AppHeader from './components/AppHeader';
+import AppContent from './components/AppContent';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
+    AppContent
   }
 }
 </script>
