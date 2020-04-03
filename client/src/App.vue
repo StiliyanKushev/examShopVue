@@ -1,7 +1,6 @@
 <template>
   <div id="root">
     <div class="App">
-        <!-- <ToastContainer autoClose={2300} /> -->
         <AppHeader />
         <AppContent />
         <AppFooter />
