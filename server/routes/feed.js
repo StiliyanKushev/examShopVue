@@ -19,9 +19,9 @@ function validateSellForm(payload) {
     errors.imageUrl = 'Please provide a correct image url'
   }
 
-  if (!payload || typeof payload.description !== 'string' || payload.description.trim().length < 15 || payload.description.trim().length > 50) {
+  if (!payload || typeof payload.description !== 'string' || payload.description.trim().length < 10 || payload.description.trim().length > 150) {
     isFormValid = false
-    errors.description = 'description must be at least 15 chars long and 50 at most'
+    errors.description = 'description must be at least 10 chars long and 150 at most'
   }
 
   if (!payload || typeof payload.price !== 'string' || isNaN(Number(payload.price))) {

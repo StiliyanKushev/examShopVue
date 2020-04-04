@@ -9,12 +9,24 @@
 </template>
 
 <script>
+import EventBus from '../../EventBus';
 import Product from '../partials/Product';
 export default {
   name: "ShopView",
   props: {
     products: Array,
     isStatic: Boolean,
+  },
+  mounted(){
+    EventBus.$on('removeById',(id) => {
+      for(let j = 0; j < this.currentProducts.length;j++){
+          let e = this.currentProducts[j];
+          if(e._id == id){
+            this.currentProducts.splice(j,1);
+            break;
+          }
+      }
+    });
   },
   data(){
       return {

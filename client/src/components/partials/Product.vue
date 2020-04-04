@@ -1,27 +1,88 @@
 <template>
-    <div class="productContainer">
-            <div class="title">
-                <p>{{source.title}}</p>
-                <p class="creator">{{source.creator}}</p>
-                <p class="price">{{source.price}}$</p></div>
-            <div class="image" :style="{ 'background-image': 'url(' + source.imageUrl + ')' }"></div>
-            <div class="description"><p>{{source.description}}</p></div>
-            <div class="buttons" v-if="isStatic == false">
-                <button id="buy">BUY</button>
-                <button id="edit">EDIT</button>
-                <button id="delete">DELETE</button>
-            </div>
-        </div>
+  <div class="productContainer">
+    <div class="title">
+      <p>{{source.title}}</p>
+      <p class="creator">{{source.creator}}</p>
+      <p class="price">{{source.price}}$</p>
+    </div>
+    <div class="image" :style="{ 'background-image': 'url(' + source.imageUrl + ')' }"></div>
+    <div class="description">
+      <p>{{source.description}}</p>
+    </div>
+    <div class="buttons" v-if="isStatic == false">
+      <button v-if="canBuy()" id="buy" @click.prevent="handleBuy">BUY</button>
+      <template v-if="canManipulate()">
+        <button id="edit" @click.prevent="handleEdit">EDIT</button>
+        <button id="delete" @click.prevent="handleDelete">DELETE</button>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script>
+import EventBus from '../../EventBus';
 export default {
-    name:"Product",
-    props:{
-        source: Object,
-        isStatic: Boolean
+  name: "Product",
+  props: {
+    source: Object,
+    isStatic: Boolean
+  },
+  methods: {
+    canBuy(){
+      return this.$cookies.get("username") !== this.source.creator;
+    },
+    canManipulate() {
+      return (
+        this.$cookies.get("username") == this.source.creator ||
+        JSON.parse(this.$cookies.get("roles")).indexOf("Admin") != -1
+      );
+    },
+
+    handleBuy() {
+      this.$http
+        .post(
+          `http://localhost:9999/feed/product/buy/${this.source._id}`,
+          { username: this.$cookies.get("username") },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: this.$cookies.get("token")
+            }
+          }
+        )
+        .then(res => {
+          if (!res.data.success) {
+            this.$vToastify.error({ title: " ", body: res.data.message });
+          } else {
+            this.$vToastify.success({ title: " ", body: res.data.message });
+            EventBus.$emit('removeById',this.source._id);
+          }
+        })
+    },
+    handleEdit() {},
+    handleDelete() {
+      this.$http
+        .post(
+          `http://localhost:9999/feed/product/remove/${this.source._id}`,
+          { username: this.$cookies.get("username") },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: this.$cookies.get("token")
+            }
+          }
+        )
+        .then(res => {
+          if (!res.data.success) {
+            this.$vToastify.error({ title: " ", body: res.data.message });
+          } else {
+            this.$vToastify.success({ title: " ", body: res.data.message });
+            EventBus.$emit('removeById',this.source._id);
+          }
+        });
     }
-}
+  }
+};
 </script>
 
 <style>
@@ -39,9 +100,9 @@ export default {
 }
 
 .productContainer .description {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
 
 .productContainer .title p {
   text-align: center;
@@ -86,7 +147,7 @@ export default {
   width: 100%;
 }
 
-.buttons button:hover{
+.buttons button:hover {
   background: #491bef !important;
   border-color: transparent;
   cursor: pointer;
@@ -104,7 +165,7 @@ export default {
   background: rgb(163, 0, 0);
 }
 
-.creator{
+.creator {
   text-align: center;
   font-weight: bold;
   font-size: 1.3em;

@@ -4,7 +4,7 @@ import EventBus from '../EventBus';
 function saveUser(token,username,roles){
     Vue.$cookies.set('token',token);
     Vue.$cookies.set('username',username);
-    Vue.$cookies.set('roles',roles);
+    Vue.$cookies.set('roles',JSON.stringify(roles));
     EventBus.$emit('login',username);
 }
 

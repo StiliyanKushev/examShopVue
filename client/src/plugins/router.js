@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 import VueCookies from 'vue-cookies';
 
 Vue.use(VueCookies);
-Vue.$cookies.config('7d');
 Vue.use(VueRouter);
+Vue.$cookies.config('7d');
 
 import HomeView from '../components/views/Home';
 import LoginView from '../components/views/Login';
@@ -22,10 +22,20 @@ let authGuard = (to, from, next) => {
     }
 }
 
+let guestGuard = (to, from, next) => {
+    let token = Vue.$cookies.get('token');
+    if(token){
+        next('/');
+    }
+    else{
+        next();
+    }
+}
+
 let routes = [
     { path: '/', component: HomeView },
-    { path: '/login', component: LoginView },
-    { path: '/register', component: RegisterView },
+    { path: '/login', component: LoginView, beforeEnter: guestGuard },
+    { path: '/register', component: RegisterView, beforeEnter: guestGuard },
     { path: '/shop', component: ShopView },
     { path: '/sell', component: SellView, beforeEnter: authGuard },
 ];
