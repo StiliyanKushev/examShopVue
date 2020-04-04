@@ -59,7 +59,9 @@ export default {
           }
         })
     },
-    handleEdit() {},
+    handleEdit() {
+      this.$router.push({path:`/edit/${this.source._id}`, query:this.source});
+    },
     handleDelete() {
       this.$http
         .post(

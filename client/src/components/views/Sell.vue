@@ -79,7 +79,7 @@ export default {
                 if(!this.$v.form.title.minLength) errors.push("Title must be at least 5 chars long!");
 
                 if(!this.$v.form.imageUrl.required) errors.push("Image Url is required!");
-                if(!this.$v.form.imageUrl.isImageUrl) errors.push("Image Url is invalid!");
+                else if(!this.$v.form.imageUrl.isImageUrl) errors.push("Image Url is invalid!");
 
                 if(!this.$v.form.description.required) errors.push("Description is required!");
                 if(!this.$v.form.description.minLength || !this.$v.form.description.maxLength) errors.push("Description must be between 10 and 150 chars long!");

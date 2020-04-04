@@ -11,6 +11,7 @@ import LoginView from '../components/views/Login';
 import RegisterView from '../components/views/Register';
 import ShopView from '../components/views/Shop';
 import SellView from '../components/views/Sell';
+import EditView from '../components/views/Edit';
 
 let authGuard = (to, from, next) => {
     let token = Vue.$cookies.get('token');
@@ -38,6 +39,7 @@ let routes = [
     { path: '/register', component: RegisterView, beforeEnter: guestGuard },
     { path: '/shop', component: ShopView },
     { path: '/sell', component: SellView, beforeEnter: authGuard },
+    { path: '/edit/:id', component: EditView, beforeEnter: authGuard },
 ];
 
 const router = new VueRouter({
