@@ -14,7 +14,7 @@ function validateSignupForm (payload) {
     errors.username = 'Username must be at least 4 characters long'
   }
 
-  if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
+  if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) { //TODO fix (throws error for short email)
     isFormValid = false
     errors.email = 'Please provide a correct email address'
   }
@@ -79,12 +79,28 @@ router.post('/register', (req, res, next) => {
       })
     }
 
-    return res.status(200).json({
-      success: true,
-      message: 'You have successfully signed up! Now you should be able to login.',
-      token: token,
-      user: userData 
-    })
+    return passport.authenticate('local-login', (err, token, userData) => {
+      if (err) {
+        if (err.name === 'IncorrectCredentialsError') {
+          return res.status(200).json({
+            success: false,
+            message: err.message
+          })
+        }
+  
+        return res.status(200).json({
+          success: false,
+          message: 'Could not process the form.'
+        })
+      }
+  
+      return res.json({
+        success: true,
+        message: 'You have successfully signed up!',
+        token,
+        user: userData
+      })
+    })(req, res, next)
   })(req, res, next)
 })
 
