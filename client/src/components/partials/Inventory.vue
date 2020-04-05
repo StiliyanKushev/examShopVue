@@ -28,11 +28,18 @@ export default {
     },
     methods:{
         fetchProducts(){
+            console.log(this.$cookies.get('username'));
             this.$http.get(`http://localhost:9999/feed/products/${this.view}`,{
                 headers: { "Content-Type": "application/json", token: this.$cookies.get('token'),username: this.$cookies.get('username')}
             })
             .then((res) => {
-                this.products = res.data.products;
+                if(res.data.products.length > 0){
+                    this.products = res.data.products;
+                }
+                else{
+                    this.$vToastify.error({title:" ", body: "There aren't any products in this section." });
+                    this.$router.push('/inventory');
+                }
             })
 
             return [];
