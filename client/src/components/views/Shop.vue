@@ -33,6 +33,11 @@ export default {
           currentProducts: this.products || this.fetchProducts()
       }
   },
+  watch:{
+    products(p){
+      this.currentProducts = p;
+    }
+  },
   methods:{
       fetchProducts(){
           this.$http.get('http://localhost:9999/feed/products')

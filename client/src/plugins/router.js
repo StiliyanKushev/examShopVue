@@ -12,6 +12,8 @@ import RegisterView from '../components/views/Register';
 import ShopView from '../components/views/Shop';
 import SellView from '../components/views/Sell';
 import EditView from '../components/views/Edit';
+import InventoryView from '../components/views/Inventory';
+import InventoryPartialView from '../components/partials/Inventory';
 
 let authGuard = (to, from, next) => {
     let token = Vue.$cookies.get('token');
@@ -38,6 +40,10 @@ let routes = [
     { path: '/login', component: LoginView, beforeEnter: guestGuard },
     { path: '/register', component: RegisterView, beforeEnter: guestGuard },
     { path: '/shop', component: ShopView },
+    { path: '/inventory', component: InventoryView, beforeEnter: authGuard },
+        { path: '/inventory/selling', component: InventoryPartialView, beforeEnter: authGuard, props:{view:'selling'}},
+        { path: '/inventory/sold', component: InventoryPartialView, beforeEnter: authGuard, props:{view:'sold'}},
+        { path: '/inventory/bought', component: InventoryPartialView, beforeEnter: authGuard, props:{view:'bought'}},
     { path: '/sell', component: SellView, beforeEnter: authGuard },
     { path: '/edit/:id', component: EditView, beforeEnter: authGuard },
 ];
