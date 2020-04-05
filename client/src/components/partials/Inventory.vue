@@ -28,7 +28,6 @@ export default {
     },
     methods:{
         fetchProducts(){
-            console.log(this.$cookies.get('token'));
             this.$http.get(`http://localhost:9999/feed/products/${this.view}`,{
                 headers: { "Content-Type": "application/json", token: this.$cookies.get('token'),username: this.$cookies.get('username')}
             })
