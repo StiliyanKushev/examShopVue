@@ -32,6 +32,10 @@ export default {
       return this.$cookies.get("username") !== this.source.creator;
     },
     canManipulate() {
+      //is logged out
+      if(!this.$cookies.get('username')){
+        return false;
+      }
       return (
         this.$cookies.get("username") == this.source.creator ||
         JSON.parse(this.$cookies.get("roles")).indexOf("Admin") != -1
