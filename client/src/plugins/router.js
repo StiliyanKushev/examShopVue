@@ -46,6 +46,7 @@ let routes = [
         { path: '/inventory/bought', component: InventoryPartialView, beforeEnter: authGuard, props:{view:'bought'}},
     { path: '/sell', component: SellView, beforeEnter: authGuard },
     { path: '/edit/:id', component: EditView, beforeEnter: authGuard },
+    { path: '*', redirect:'/' }
 ];
 
 const router = new VueRouter({

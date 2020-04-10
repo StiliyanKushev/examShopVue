@@ -6,26 +6,14 @@
     <nav>
       <ul>
         <template v-if="!isLoggedIn">
-          <li>
-            <router-link to="/shop">Shop</router-link>
-          </li>
-          <li>
-            <router-link to="/login">Login</router-link>
-          </li>
-          <li>
-            <router-link to="/register">Register</router-link>
-          </li>
+          <router-link tag='li' to="/shop">Shop</router-link>
+          <router-link tag='li' to="/login">Login</router-link>
+          <router-link tag='li' to="/register">Register</router-link>
         </template>
         <template v-else>
-          <li>
-            <router-link to="/inventory">Inventory</router-link>
-          </li>
-          <li>
-            <router-link to="/shop">Shop</router-link>
-          </li>
-          <li>
-            <router-link to="/sell">Sell</router-link>
-          </li>
+          <router-link tag='li' to="/inventory">Inventory</router-link>
+          <router-link tag='li' to="/shop">Shop</router-link>
+          <router-link tag='li' to="/sell">Sell</router-link>
           <li id="welcomeLink">
             <a to="#">Welcome {{username}}</a>
           </li>

@@ -14,9 +14,12 @@ export default {
         Fragment,
         ShopView
     },
+    created(){
+        this.fetchProducts();
+    },
     data(){
         return {
-            products: this.fetchProducts(),
+            products: [],
         }
     },
     methods:{
@@ -24,9 +27,7 @@ export default {
             this.$http.get('http://localhost:9999/feed/products/latest')
             .then((res) => {
                 this.products = res.data.products;
-            })
-
-            return [];
+            });
         }
     }
 }

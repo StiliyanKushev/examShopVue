@@ -25,10 +25,11 @@
 
 <script>
 import userHandler from '../../handlers/user';
+import formHandler from '../../mixins/formHandler';
 import { validationMixin } from 'vuelidate';
 import { minLength, email, required } from 'vuelidate/lib/validators';
 export default {
-    mixins:[validationMixin],
+    mixins:[formHandler,validationMixin],
     name: 'RegisterView',
     data(){
         return {
@@ -36,6 +37,20 @@ export default {
                 username:'',
                 email:'',
                 password:'',
+            },
+            errors:{
+                username:{
+                    required:'Username is required!',
+                    minLength: 'Username must be at least 4 chars long!'
+                },
+                email:{
+                    required: 'Email is required!',
+                    email: 'Email is invalid!'
+                },
+                password:{
+                    required: 'Password is required!',
+                    minLength: 'Password must be at least 8 chars long!'
+                }
             }
         }
     },
@@ -57,34 +72,10 @@ export default {
     },
     methods:{
         handleSubmit(){
-            this.$v.form.$touch();
-
-            if(this.$v.form.$invalid){
-                //vue notify errors
-                let errors = [];
-
-                if(!this.$v.form.username.required) errors.push("Username is required!");
-                if(!this.$v.form.username.minLength) errors.push("Username must be at least 4 chars long!");
-                if(!this.$v.form.email.required) errors.push("Email is required!");
-                if(!this.$v.form.email.email) errors.push("Email is invalid!");
-                if(!this.$v.form.password.required) errors.push("Password is required!");
-                if(!this.$v.form.password.minLength) errors.push("Password must be at least 8 chars long!");
-
-                for(let err of errors) this.$vToastify.error({title:" ", body: err });
-            }
-            else{
-                this.$http.post("http://localhost:9999/auth/register",this.form)
-                .then((res) => {
-                    if(!res.data.success){
-                        this.$vToastify.error({title:" ", body: res.data.message });
-                    }
-                    else{
-                        this.$vToastify.success({title:" ", body: res.data.message });
-                        userHandler.saveUser(res.data.token,res.data.user.username,res.data.user.roles);
-                        this.$router.push('/');// redirect to home
-                    }
-                });
-            }
+            this.$submit("http://localhost:9999/auth/register",(res) => {
+                userHandler.saveUser(res.data.token,res.data.user.username,res.data.user.roles);
+                this.$router.push('/');// redirect to home
+            });
         }
     }
 }
