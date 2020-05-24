@@ -43,6 +43,8 @@ export default {
     },
 
     handleBuy() {
+      if(!this.$cookies.get('token')) this.$router.push('/login');
+      else
       this.$http
         .post(
           `http://localhost:9999/feed/product/buy/${this.source._id}`,
